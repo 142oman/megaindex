@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaIndex - Broadcast API v1 Doc</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .doc-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        code {
+            background: #000;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.3rem;
+            color: var(--secondary);
+            font-family: monospace;
+        }
+
+        pre {
+            background: #000;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            color: #10b981;
+            margin-top: 1rem;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.4rem;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .get {
+            background: #0d6efd22;
+            color: #0d6efd;
+            border: 1px solid #0d6efd44;
+        }
+
+        .post {
+            background: #19875422;
+            color: #198754;
+            border: 1px solid #19875444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="max-width: 900px; padding-top: 5rem;">
+        <header>
+            <h1 style="font-size: 2.5rem;">Broadcast API <span
+                    style="color: var(--secondary); font-size: 1rem;">v1.0</span></h1>
+            <p>Standardized endpoints for automated cable ingestion and scheduling.</p>
+            <br>
+            <a href="index.html" style="color: var(--primary-light); text-decoration: none;"><i
+                    class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </header>
+
+        <div class="doc-section">
+            <h2><span class="method get">GET</span> <code>/api/v1/shows</code></h2>
+            <p>Retrieves a high-level list of all available shows in the library.</p>
+            <pre>[
+  {
+    "id": "816d2993-...",
+    "title": "Batman: Caped Crusader",
+    "type": "series",
+    "poster": "https://...",
+    "addedAt": 1770381997122,
+    "seasonCount": 1
+  }
+]</pre>
+        </div>
+
+        <div class="doc-section">
+            <h2><span class="method get">GET</span> <code>/api/v1/shows/:id</code></h2>
+            <p>Retrieves the complete data structure of a show, including all seasons, episodes, and resolved download
+                links.</p>
+            <pre>{
+  "id": "...",
+  "title": "...",
+  "seasons": [
+    {
+      "number": "1",
+      "episodes": [
+        {
+          "title": "Episode 1",
+          "links": [ { "quality": "1080p", "finalLink": "https://mega.nz/..." } ]
+        }
+      ]
+    }
+  ]
+}</pre>
+        </div>
+
+        <div class="doc-section">
+            <h2><span class="method get">GET</span> <code>/api/v1/search?q={query}</code></h2>
+            <p>Filter the library by title. Partial matches are supported.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2><span class="method post">POST</span> <code>/api/v1/ingest</code></h2>
+            <p>Request the system to scrape and ingest a new show. Returns a task ID for tracking.</p>
+            <p><strong>Body:</strong> <code>{ "url": "https://animesalt.top/..." }</code></p>
+            <pre>{
+  "message": "Ingestion task created",
+  "taskId": "fa7afdf1-..."
+}</pre>
+        </div>
+
+        <footer style="text-align: center; margin-top: 5rem; color: var(--text-dim); padding-bottom: 2rem;">
+            MegaIndex API Engine &copy; 2026 for Broadcast Systems
+        </footer>
+    </div>
+</body>
+
+</html>

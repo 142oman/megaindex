@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaIndex - Premium Anime & Movie Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>MegaIndex</h1>
+            <p>Your extensive library of high-quality anime, series, and movies.</p>
+            <div style="margin-top: 1rem;">
+                <a href="api.html"
+                    style="color: var(--primary-light); text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--primary); padding: 0.3rem 0.8rem; border-radius: 2rem; background: rgba(147, 51, 234, 0.1);">
+                    <i class="fas fa-code"></i> Developer API
+                </a>
+            </div>
+        </header>
+
+        <section class="input-section">
+            <input type="text" id="urlInput" placeholder="Paste AnimeSalt URL here (Series or Movie)...">
+            <button id="addBtn">
+                <i class="fas fa-plus"></i> Add to Library
+            </button>
+        </section>
+
+        <div id="status"></div>
+
+        <section class="queue-section" id="queueSection" style="display: none;">
+            <h3 class="queue-title">
+                <i class="fas fa-tasks"></i> Active Queue
+            </h3>
+            <div class="queue-list" id="queueList">
+                <!-- Queue items will be loaded here -->
+            </div>
+        </section>
+
+        <section class="library-section">
+            <h3 class="section-title" style="margin-bottom: 2rem; margin-top: 3rem;">
+                <i class="fas fa-film"></i> My Library
+            </h3>
+            <div class="library-grid" id="libraryGrid">
+                <!-- Items will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalBody">
+                <!-- Detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="client.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "megaindex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.13.4",
+    "cheerio": "^1.2.0",
+    "express": "^5.2.1",
+    "lodash-id": "^0.14.1",
+    "lowdb": "^1.0.0",
+    "p-limit": "^7.3.0",
+    "puppeteer": "^24.37.2"
+  }
+}
