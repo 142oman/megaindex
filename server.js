@@ -6,6 +6,8 @@ const FileSync = require('lowdb/adapters/FileSync');
 const lodashId = require('lodash-id');
 const pLimit = require('p-limit');
 const puppeteer = require('puppeteer');
+const mega = require('megajs');
+
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
@@ -327,6 +329,54 @@ app.post('/api/v1/ingest', (req, res) => {
     processQueue();
     res.status(202).json({ message: 'Ingestion task created', taskId: task.id });
 });
+
+/**
+ * GET /api/v1/stream
+ * Proxies a Mega.nz link to a streamable response.
+ * Query parameter: url (Mega.nz file link)
+ */
+app.get('/api/v1/stream', async (req, res) => {
+    const { url } = req.query;
+    if (!url) return res.status(400).send('URL is required');
+
+    try {
+        const file = mega.File.fromURL(url);
+        await file.loadAttributes();
+
+        const fileSize = file.size;
+        const range = req.headers.range;
+
+        if (range) {
+            const parts = range.replace(/bytes=/, "").split("-");
+            const start = parseInt(parts[0], 10);
+            const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+            const chunksize = (end - start) + 1;
+
+            console.log(`[Stream] Range request: ${start}-${end}/${fileSize}`);
+
+            const stream = file.download({ start, end });
+
+            res.writeHead(206, {
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': chunksize,
+                'Content-Type': 'video/mp4',
+            });
+            stream.pipe(res);
+        } else {
+            console.log(`[Stream] Full request: ${fileSize} bytes`);
+            res.writeHead(200, {
+                'Content-Length': fileSize,
+                'Content-Type': 'video/mp4',
+            });
+            file.download().pipe(res);
+        }
+    } catch (e) {
+        console.error('[Stream] Error:', e.message);
+        res.status(500).send('Streaming failed: ' + e.message);
+    }
+});
+
 
 const PORT = 4000;
 app.listen(PORT, () => {
