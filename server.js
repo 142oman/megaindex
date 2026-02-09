@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const low = require('lowdb');
@@ -17,6 +18,7 @@ db._.mixin(lodashId);
 db.defaults({ library: [], queue: [] }).write();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
