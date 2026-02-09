@@ -9,19 +9,36 @@ A web scraping and indexing application built with Node.js and Express.
 - Modern web interface
 - Queue-based processing system
 
-## Installation
+## Deployment
 
-```bash
-npm install
-```
+### GitHub Deployment
+1. Create a new repository on GitHub.
+2. Link your local project: `gh repo create megaindex --public --source=. --remote=origin --push`
 
-## Usage
+### Ubuntu Server Setup
+We provide a setup script to automate the installation of Node.js, Puppeteer dependencies, and PM2.
 
-```bash
-node server.js
-```
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd megaindex
+   ```
 
-The server will start on port 3000 by default.
+2. **Run the setup script:**
+   ```bash
+   chmod +x setup_ubuntu.sh
+   ./setup_ubuntu.sh
+   ```
+
+3. **Start the application:**
+   ```bash
+   pm2 start ecosystem.config.js
+   ```
+
+4. **Monitor logs:**
+   ```bash
+   pm2 logs megaindex
+   ```
 
 ## Dependencies
 
