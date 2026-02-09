@@ -328,7 +328,7 @@ app.post('/api/v1/ingest', (req, res) => {
     res.status(202).json({ message: 'Ingestion task created', taskId: task.id });
 });
 
-const PORT = 3000;
+const PORT = 4000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     // Clear any stuck processing tasks
